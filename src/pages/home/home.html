@@ -1,0 +1,36 @@
+<ion-header ion-fixed>
+  <ion-navbar color="navbar-global">
+    <ion-title>TheFinger</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="scroll-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 text-center>
+        <ion-icon name="camera" class="btn-icon-camera" (click)="getPicture()"></ion-icon>
+      </ion-col>
+      <ion-col col-6 text-center>
+        <ion-icon name="help-circle" class="btn-icon-help"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12>
+        <div text-center>
+          <img [src]="image" *ngIf="image" #imgCamera style="width: 90%; height: 90%;" />
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div text-center>
+    <button ion-button *ngIf="statusShowInfo" (click)="showInfo()">Mostrar información</button>
+  </div>
+
+  <ion-footer>
+    <div text-center>
+      TheFinger ®
+    </div>
+  </ion-footer>
+</ion-content>

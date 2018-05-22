@@ -1,0 +1,16 @@
+page-home {
+    font-family: "Open Sans" !important;
+
+    .btn-icon-camera, .btn-icon-help {
+        font-size: 50px;
+    }
+
+    .scroll-content {
+        overflow: hidden;
+    }
+
+    ion-list {
+        overflow-y: auto;
+        max-height: 72vh;
+    }
+}

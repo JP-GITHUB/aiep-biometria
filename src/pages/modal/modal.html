@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Información</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">Cerrar</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-textarea [(ngModel)]="data" rows="25"></ion-textarea>-->
+
+  <ion-row>
+    <ion-col *ngFor="let item of data">
+      <ion-card>
+        <ion-card-header>
+          {{item.faceId}}
+        </ion-card-header>
+        <ion-card-content>
+            {{item.faceAttributes.gender}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
