@@ -82,46 +82,39 @@ export class HomePage {
   }
 
   faceRecognition(img: Blob) {
-    this.getKeyAzure().subscribe(data => {
-      let resp = JSON.parse(data["_body"]);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/octet-stream');
+    headers.append("Ocp-Apim-Subscription-Key", "");
 
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/octet-stream');
-      headers.append("Ocp-Apim-Subscription-Key", resp.azure_key);
+    var params = {
+      "returnFaceId": "true",
+      "returnFaceLandmarks": "false",
+      "returnFaceAttributes":
+        "age,gender,headPose,smile,facialHair,glasses,emotion," +
+        "hair,makeup,occlusion,accessories,blur,exposure,noise"
+    };
 
-      var params = {
-        "returnFaceId": "true",
-        "returnFaceLandmarks": "false",
-        "returnFaceAttributes":
-          "age,gender,headPose,smile,facialHair,glasses,emotion," +
-          "hair,makeup,occlusion,accessories,blur,exposure,noise"
-      };
+    var params_url = Object.keys(params).map(function (k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
+    }).join('&')
 
-      var params_url = Object.keys(params).map(function (k) {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(params[k])
-      }).join('&')
-
-      this.http.post(
-        "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect" + "?" + params_url, img,
-        {
-          headers: headers
-        })
-        .map(res => res.json())
-        .subscribe(res => {
-          this.faces = JSON.stringify(res);
-          this.statusShowInfo = "show";
-        }, (err) => {
-          let alert = this.alertCtrl.create({
-            title: 'Error',
-            subTitle: err,
-            buttons: ['OK']
-          });
-          alert.present();
-        })
-    }, (err) => {
-
-    }
-    );
+    this.http.post(
+      "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect" + "?" + params_url, img,
+      {
+        headers: headers
+      })
+      .map(res => res.json())
+      .subscribe(res => {
+        this.faces = JSON.stringify(res);
+        this.statusShowInfo = "show";
+      }, (err) => {
+        let alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: err,
+          buttons: ['OK']
+        });
+        alert.present();
+      })
   }
 
   getKeyAzure() {

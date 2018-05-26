@@ -14,10 +14,44 @@
     <ion-col *ngFor="let item of data">
       <ion-card>
         <ion-card-header>
-          {{item.faceId}}
+          Genero
         </ion-card-header>
         <ion-card-content>
-            {{item.faceAttributes.gender}}
+          <div *ngIf="item.faceAttributes.gender == 'male'">
+            <div style="background-color: blue; color:white">Masculino</div>
+          </div>
+          <div *ngIf="item.faceAttributes.gender == 'female'">
+            <div style="background-color: pink">Femenino</div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          Edad
+        </ion-card-header>
+        <ion-card-content>
+          <div>{{item.faceAttributes.age}}</div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          Esta sonriendo
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="item.faceAttributes.smile < 0.4">
+            <div>No</div>
+          </div>
+          <div *ngIf="item.faceAttributes.smile >= 0.4">
+            <div>Si</div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          Accesorios
+        </ion-card-header>
+        <ion-card-content>
+          <div>{{item.faceAttributes.accessories.type}}</div>
         </ion-card-content>
       </ion-card>
     </ion-col>
