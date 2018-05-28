@@ -4,14 +4,13 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-//import { ModalPage } from '../modal/modal';
-
 @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
 })
 export class HomePage {
+  loader: any;
   image: string = null;
   faces: any;
   statusShowInfo: string = "";
@@ -33,15 +32,15 @@ export class HomePage {
     }
     this.camera.getPicture(options)
       .then(imageData => {
-        let loader = this.loadingCtrl.create({
-          content: "Procesando...",
-          duration: 3000
+        this.statusShowInfo = "";
+        
+        this.loader = this.loadingCtrl.create({
+          content: "Procesando..."
         });
-        loader.present();
+        this.loader.present();
 
         this.image = `data:image/jpeg;base64,${imageData}`;
-        this.faceRecognition(this.dataURLtoBlob(`data:image/jpeg;base64,${imageData}`));
-
+        this.faceRecognition(this.dataURLtoBlob(`data:image/jpeg;base64,${imageData}`));        
       })
       .catch(error => {
         console.error(error);
@@ -71,13 +70,11 @@ export class HomePage {
     myModal.present();
 
     myModal.onDidDismiss((data) => {
-      console.log("I have dismissed.");
-      console.log(data);
+  
     });
 
     myModal.onWillDismiss((data) => {
-      console.log("I'm about to dismiss");
-      console.log(data);
+
     });
   }
 
@@ -107,6 +104,7 @@ export class HomePage {
       .subscribe(res => {
         this.faces = JSON.stringify(res);
         this.statusShowInfo = "show";
+        this.loader.dismiss();
       }, (err) => {
         let alert = this.alertCtrl.create({
           title: 'Error',

@@ -8,52 +8,50 @@
 </ion-header>
 
 <ion-content>
-  <!--<ion-textarea [(ngModel)]="data" rows="25"></ion-textarea>-->
-
   <ion-row>
-    <ion-col *ngFor="let item of data">
-      <ion-card>
-        <ion-card-header>
-          Genero
-        </ion-card-header>
-        <ion-card-content>
-          <div *ngIf="item.faceAttributes.gender == 'male'">
-            <div style="background-color: blue; color:white">Masculino</div>
-          </div>
-          <div *ngIf="item.faceAttributes.gender == 'female'">
-            <div style="background-color: pink">Femenino</div>
-          </div>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          Edad
-        </ion-card-header>
-        <ion-card-content>
-          <div>{{item.faceAttributes.age}}</div>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          Esta sonriendo
-        </ion-card-header>
-        <ion-card-content>
-          <div *ngIf="item.faceAttributes.smile < 0.4">
-            <div>No</div>
-          </div>
-          <div *ngIf="item.faceAttributes.smile >= 0.4">
-            <div>Si</div>
-          </div>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          Accesorios
-        </ion-card-header>
-        <ion-card-content>
-          <div>{{item.faceAttributes.accessories.type}}</div>
-        </ion-card-content>
-      </ion-card>
+    <ion-col col-12 *ngFor="let item of data; let i = index">
+        <ion-card>
+          <ion-card-header>
+            Persona {{i + 1}}
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>Sexo</ion-label>
+            <ion-icon name="{{item.faceAttributes.gender == 'male'? 'male': 'woman'}}"></ion-icon>
+            {{item.faceAttributes.gender == 'male'? 'Masculino': 'Femenino'}}
+
+            <ion-item-divider></ion-item-divider>
+
+            <ion-label>Edad</ion-label>
+            <div>{{item.faceAttributes.age}}</div>
+
+            <ion-item-divider></ion-item-divider>
+
+            <ion-label>Accesorios</ion-label>
+            <p *ngIf="item.faceAttributes.accessories[0]?.type">{{item.faceAttributes.accessories[0].type}}</p>
+            <p *ngIf="item.faceAttributes.accessories[1]?.type">{{item.faceAttributes.accessories[1].type}}</p>
+            <p *ngIf="item.faceAttributes.accessories[2]?.type">{{item.faceAttributes.accessories[2].type}}</p>
+
+            <!--<div>{{ item.faceAttributes.accessories | json }}</div>-->
+
+            <ion-item-divider></ion-item-divider>
+
+            <ion-label>Color de pelo</ion-label>
+            <div *ngIf="item.faceAttributes.hair.hairColor[0]?.color == 'brown'">Marron</div>
+            <div *ngIf="item.faceAttributes.hair.hairColor[0]?.color == 'black'">Negro</div>
+
+            <ion-item-divider></ion-item-divider>
+
+            <ion-label>Maquillaje</ion-label>
+            <div>{{item.faceAttributes.makeup.eyeMakeup == true ? 'Sombra de ojos': ''}}</div>
+            <div>{{item.faceAttributes.makeup.lipMakeup == true ? 'Labial': ''}}</div>
+
+            <ion-item-divider></ion-item-divider>
+
+            <ion-label>Esta sonriendo</ion-label>
+            <div>{{item.faceAttributes.smile
+              < 0.4 ? 'No': 'Si'}}</div>
+          </ion-card-content>
+        </ion-card>
     </ion-col>
   </ion-row>
 </ion-content>
